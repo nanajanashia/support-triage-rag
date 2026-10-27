@@ -113,16 +113,6 @@ bin/evaluate.php       run the eval set, print hit rates and confusion matrix
 
 **Exact lookups before semantic search.** "What happened on ticket 150" is not a similarity problem. A regex catches ticket references and answers from the primary key.
 
-## Known limitations
+## Scope
 
-- Keyword rules have false positives: "the courier charged us twice" trips the billing rule.
-- 7B model drafts are grounded and cite correctly but need a human edit before sending.
-- Synthetic data written by one person shares vocabulary with the evaluation set. Real tickets are messier.
-- Cosine similarity is computed in PHP over all vectors on every query. Fine for 150 tickets, wrong at scale.
-
-## What I would change for production
-
-- A vector index (pgvector, MySQL 9 `VECTOR`, OpenSearch) instead of JSON plus PHP cosine.
-- An async queue for embedding and generation, fed by the ticket system (Zendesk, Freshdesk).
-- `bin/evaluate.php --json` in CI, failing the build if accuracy drops below a floor.
-- A prompt version column in `triage_log`, and a column for what the human actually did.
+This is a working prototype sized for a few hundred tickets: similarity is computed in PHP over all stored vectors, and the escalation rules are plain regular expressions. Both are easy to swap for a vector index and a classifier when the ticket volume grows. `auto_reply` produces a draft for one-click send, not an automatic reply.
