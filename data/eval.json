@@ -1,0 +1,182 @@
+[
+  {
+    "id": "E01",
+    "subject": "Website shows more stock than we have",
+    "body": "Our walnut coffee table shows free to sell 9 but there are only 3 in the unit. We had four website orders cancelled by customers on Friday. On hand 9, allocated 0. Something isn't adding up.",
+    "expected_category": "stock_figures",
+    "expected_root_cause": "allocation_not_released_on_cancel",
+    "expected_action": "auto_reply",
+    "note": "Classic cancelled-orders pattern, should match tickets 1, 4, 19 and be answerable from them."
+  },
+  {
+    "id": "E02",
+    "subject": "Two copies of order #6120",
+    "body": "Order 6120 is in your system twice, the second one as 6120-1. The customer added a second lamp to the order after paying. We'd already picked the first version.",
+    "expected_category": "order_import",
+    "expected_root_cause": "shopify_edit_creates_duplicate",
+    "expected_action": "auto_reply",
+    "note": "Near copy of ticket 25."
+  },
+  {
+    "id": "E03",
+    "subject": "Xero hasn't synced since Tuesday",
+    "body": "Integration page says last sync 4 days ago and there's a yellow 'reconnect' message. Our finance person who set it up left the company last week.",
+    "expected_category": "accounting_sync",
+    "expected_root_cause": "sync_stuck_auth_expired",
+    "expected_action": "auto_reply",
+    "note": "Strong signal: departed user plus reconnect banner."
+  },
+  {
+    "id": "E04",
+    "subject": "Not receiving password reset",
+    "body": "Requested a password reset 4 times, nothing arrives, checked junk. We use Microsoft 365 for email.",
+    "expected_category": "user_access",
+    "expected_root_cause": "password_reset_email_blocked",
+    "expected_action": "auto_reply",
+    "note": "Matches ticket 102 closely."
+  },
+  {
+    "id": "E05",
+    "subject": "Weird characters in the CSV",
+    "body": "Opening the customer export in Excel, every £ is shown as Â£ and 'Café Noir' comes out as 'CafÃ© Noir'.",
+    "expected_category": "reporting_export",
+    "expected_root_cause": "csv_encoding",
+    "expected_action": "auto_reply",
+    "note": "Well-known encoding issue, ticket 121."
+  },
+  {
+    "id": "E06",
+    "subject": "Reorder prompts come far too late",
+    "body": "Our Portuguese tile supplier takes 10 weeks. We set that on the supplier. The system still only suggests reordering when we're down to a week of stock, so we're constantly out.",
+    "expected_category": "purchasing",
+    "expected_root_cause": "supplier_lead_time_ignored",
+    "expected_action": "auto_reply",
+    "note": "Ticket 88."
+  },
+  {
+    "id": "E07",
+    "subject": "Back order we don't need",
+    "body": "Sent 18 of 20 cases, customer happy with 18 and doesn't want the rest. The order is still open with 2 on back order and 2 allocated. How do we close it?",
+    "expected_category": "despatch",
+    "expected_root_cause": "part_shipment_back_order_open",
+    "expected_action": "auto_reply",
+    "note": "Ticket 48."
+  },
+  {
+    "id": "E08",
+    "subject": "VAT on our Xero invoices is wrong for food",
+    "body": "Our flour and oats are zero rated but every Xero invoice this month has 20% on them. In your system the products say zero rated. Accountant isn't happy.",
+    "expected_category": "accounting_sync",
+    "expected_root_cause": "xero_tax_rate_mapping",
+    "expected_action": "auto_reply",
+    "note": "Ticket 65. Confusable with billing (an invoice problem) but it is the customer's own invoices."
+  },
+  {
+    "id": "E09",
+    "subject": "Stock numbers all over the place",
+    "body": "Honestly the stock figures just don't seem right lately. Different numbers in different places. Can someone look?",
+    "expected_category": "stock_figures",
+    "expected_root_cause": null,
+    "expected_action": "human_review",
+    "note": "Too vague to answer; retrieval will find stock tickets but no specific root cause."
+  },
+  {
+    "id": "E10",
+    "subject": "Shipped wrong quantity and courier charged us twice",
+    "body": "Customer reduced from 8 to 5, we shipped 8 because the pick list said 8. Separately DPD has invoiced us twice for the consignment. Can you help with both?",
+    "expected_category": "despatch",
+    "expected_root_cause": "picked_old_quantity",
+    "expected_action": "human_review",
+    "note": "First half is known (ticket 47), second half is a courier billing matter outside the product. Mixed ticket should go to a human."
+  },
+  {
+    "id": "E11",
+    "subject": "Orders not coming through from our Squarespace shop",
+    "body": "We've connected our Squarespace store and orders aren't importing. Is there a setting?",
+    "expected_category": "order_import",
+    "expected_root_cause": null,
+    "expected_action": "human_review",
+    "note": "Squarespace is not a supported channel in any past ticket. Model should not confidently answer from Shopify/Woo cases."
+  },
+  {
+    "id": "E12",
+    "subject": "Report of sales per salesperson per month",
+    "body": "We want a report showing sales by salesperson by month with margin. I can't find one. Is this possible or could you build it?",
+    "expected_category": "reporting_export",
+    "expected_root_cause": null,
+    "expected_action": "human_review",
+    "note": "Feature request, not a fault."
+  },
+  {
+    "id": "E13",
+    "subject": "Suggested POs ignore our second warehouse",
+    "body": "We have shortfalls in Unit 2 but plenty in Main. The suggestions screen says nothing needs ordering. We don't want to transfer, we want to order direct to Unit 2.",
+    "expected_category": "purchasing",
+    "expected_root_cause": null,
+    "expected_action": "human_review",
+    "note": "Plausible but no matching past case; multi-location purchasing config."
+  },
+  {
+    "id": "E14",
+    "subject": "Can't add our new starter",
+    "body": "Trying to invite a new picker and it says user limit reached. We're definitely under the limit, we have 4 people. Do we have to pay for a bigger plan?",
+    "expected_category": "user_access",
+    "expected_root_cause": "plan_user_limit",
+    "expected_action": "human_review",
+    "note": "Ticket 109 explains it, but it touches plan/billing and the customer asks about paying, so a human should confirm rather than auto-send."
+  },
+  {
+    "id": "E15",
+    "subject": "Double payment taken",
+    "body": "You've taken £199 twice from our account on the 3rd. One payment please, and refund the other.",
+    "expected_category": "billing",
+    "expected_root_cause": "billing_double_charge",
+    "expected_action": "escalate",
+    "note": "Billing refund: hard rule escalate regardless of similarity."
+  },
+  {
+    "id": "E16",
+    "subject": "Half our products have vanished",
+    "body": "About 200 products from the Kitchen range are gone this morning. Not archived. Website is full of broken links. Need these back now.",
+    "expected_category": "data_loss",
+    "expected_root_cause": "bulk_delete_by_user",
+    "expected_action": "escalate",
+    "note": "Data loss: hard rule escalate."
+  },
+  {
+    "id": "E17",
+    "subject": "Disputing this month's invoice",
+    "body": "We were promised the trade portal was included. It isn't. We've paid three months for something we can't use and we're not paying any more until this is sorted. Our bank is aware.",
+    "expected_category": "billing",
+    "expected_root_cause": "billing_dispute",
+    "expected_action": "escalate",
+    "note": "Billing dispute with chargeback hint."
+  },
+  {
+    "id": "E18",
+    "subject": "This is a joke",
+    "body": "Third time this month your useless system has oversold our stock. I've got a customer screaming at me over a sideboard that doesn't exist. Absolutely pathetic. Fix it today or we're gone and I'll make sure everyone on the trade forums knows why.",
+    "expected_category": "stock_figures",
+    "expected_root_cause": "oversold_multi_channel",
+    "expected_action": "escalate",
+    "note": "Technically a known issue (ticket 10) but tone is angry and threatening churn. Tone rule should escalate."
+  },
+  {
+    "id": "E19",
+    "subject": "Despatch error has cost us a contract",
+    "body": "Because your system printed the old quantity on a pick list we under-delivered to a major hotel client and they have terminated the contract. Our solicitor has asked me to request all records relating to this order and your system's handling of it. Please treat this as formal.",
+    "expected_category": "despatch",
+    "expected_root_cause": "picked_old_quantity",
+    "expected_action": "escalate",
+    "note": "Legal: solicitor involved and formal records request. Must escalate even though the fault is a known one."
+  },
+  {
+    "id": "E20",
+    "subject": "Every stock figure is zero",
+    "body": "Logged in this morning and every product shows 0 on hand across both locations. It was all correct at 6pm yesterday. We have deliveries going out at 10.",
+    "expected_category": "data_loss",
+    "expected_root_cause": "import_overwrote_stock",
+    "expected_action": "escalate",
+    "note": "Ticket 143. Data loss, urgent."
+  }
+]

@@ -1,0 +1,262 @@
+{
+    "model": "qwen2.5:7b",
+    "k": 5,
+    "n": 20,
+    "category_hit_rate": 1,
+    "root_cause_hit_rate": 0.9375,
+    "action_accuracy": 0.95,
+    "confusion": {
+        "auto_reply": {
+            "auto_reply": 8
+        },
+        "human_review": {
+            "human_review": 5,
+            "escalate": 1
+        },
+        "escalate": {
+            "escalate": 6
+        }
+    },
+    "rows": [
+        {
+            "id": "E01",
+            "top_score": 0.7984106130170407,
+            "top_cat": "stock_figures",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.95
+        },
+        {
+            "id": "E02",
+            "top_score": 0.7538900771297184,
+            "top_cat": "order_import",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.95
+        },
+        {
+            "id": "E03",
+            "top_score": 0.8177981454481644,
+            "top_cat": "accounting_sync",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.85
+        },
+        {
+            "id": "E04",
+            "top_score": 0.809792198541314,
+            "top_cat": "user_access",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.81
+        },
+        {
+            "id": "E05",
+            "top_score": 0.8179440514024068,
+            "top_cat": "reporting_export",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.95
+        },
+        {
+            "id": "E06",
+            "top_score": 0.8285615207644417,
+            "top_cat": "purchasing",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.95
+        },
+        {
+            "id": "E07",
+            "top_score": 0.7749791560878648,
+            "top_cat": "despatch",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.95
+        },
+        {
+            "id": "E08",
+            "top_score": 0.8858577410538804,
+            "top_cat": "accounting_sync",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "auto_reply",
+            "decided": "auto_reply",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.95
+        },
+        {
+            "id": "E09",
+            "top_score": 0.675297602217034,
+            "top_cat": "stock_figures",
+            "cat_hit": true,
+            "rc_hit": null,
+            "expected": "human_review",
+            "decided": "human_review",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.8
+        },
+        {
+            "id": "E10",
+            "top_score": 0.7202430792843731,
+            "top_cat": "despatch",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "human_review",
+            "decided": "escalate",
+            "act_hit": false,
+            "rule": "billing_dispute",
+            "conf": 1
+        },
+        {
+            "id": "E11",
+            "top_score": 0.7140164340009825,
+            "top_cat": "order_import",
+            "cat_hit": true,
+            "rc_hit": null,
+            "expected": "human_review",
+            "decided": "human_review",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.8
+        },
+        {
+            "id": "E12",
+            "top_score": 0.6200737085306897,
+            "top_cat": "reporting_export",
+            "cat_hit": true,
+            "rc_hit": null,
+            "expected": "human_review",
+            "decided": "human_review",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.8
+        },
+        {
+            "id": "E13",
+            "top_score": 0.7097728990718972,
+            "top_cat": "user_access",
+            "cat_hit": true,
+            "rc_hit": null,
+            "expected": "human_review",
+            "decided": "human_review",
+            "act_hit": true,
+            "rule": null,
+            "conf": 0.8
+        },
+        {
+            "id": "E14",
+            "top_score": 0.8316084050316911,
+            "top_cat": "user_access",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "human_review",
+            "decided": "human_review",
+            "act_hit": true,
+            "rule": "plan_or_pricing_question",
+            "conf": 0.95
+        },
+        {
+            "id": "E15",
+            "top_score": 0.806973980919699,
+            "top_cat": "billing",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "escalate",
+            "decided": "escalate",
+            "act_hit": true,
+            "rule": "billing_dispute",
+            "conf": 1
+        },
+        {
+            "id": "E16",
+            "top_score": 0.866085056678006,
+            "top_cat": "data_loss",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "escalate",
+            "decided": "escalate",
+            "act_hit": true,
+            "rule": "data_loss",
+            "conf": 1
+        },
+        {
+            "id": "E17",
+            "top_score": 0.7144822213976758,
+            "top_cat": "billing",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "escalate",
+            "decided": "escalate",
+            "act_hit": true,
+            "rule": "billing_dispute",
+            "conf": 1
+        },
+        {
+            "id": "E18",
+            "top_score": 0.7398500938906539,
+            "top_cat": "stock_figures",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "escalate",
+            "decided": "escalate",
+            "act_hit": true,
+            "rule": "abusive_tone",
+            "conf": 1
+        },
+        {
+            "id": "E19",
+            "top_score": 0.7545530807884985,
+            "top_cat": "despatch",
+            "cat_hit": true,
+            "rc_hit": false,
+            "expected": "escalate",
+            "decided": "escalate",
+            "act_hit": true,
+            "rule": "legal",
+            "conf": 1
+        },
+        {
+            "id": "E20",
+            "top_score": 0.7987491389012026,
+            "top_cat": "data_loss",
+            "cat_hit": true,
+            "rc_hit": true,
+            "expected": "escalate",
+            "decided": "escalate",
+            "act_hit": true,
+            "rule": "data_loss",
+            "conf": 1
+        }
+    ]
+}

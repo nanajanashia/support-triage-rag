@@ -1,0 +1,1352 @@
+[
+  {
+    "id": 1,
+    "subject": "Free to sell shows 12 but we only have 4 on the shelf",
+    "body": "Hi, our oak side table (SKU OAK-ST-01) shows free to sell 12 on the dashboard but I've just counted and there are 4 in the warehouse. On hand says 16 and allocated says 4. We had a run of cancellations last week on the website. Which number should I trust before I turn the listing back on?",
+    "category": "stock_figures",
+    "root_cause": "allocation_not_released_on_cancel",
+    "resolution": "Three Shopify orders were cancelled in Shopify while the integration was disconnected, so the cancellation never reached us and the stock stayed allocated. Re-synced the three orders, allocation dropped to 0 and free to sell matched the shelf. Advised to check Integrations > Shopify > Last sync when figures look off after a batch of cancellations.",
+    "created_at": "2025-02-03"
+  },
+  {
+    "id": 2,
+    "subject": "Shopify says sold out but we have 30 jars",
+    "body": "Our chilli jam is showing as sold out on the website but there are 30 jars on the shelf. In your system on hand is 30 and free to sell is 0. We have a wholesale order for 30 going out next week. Is that why?",
+    "category": "stock_figures",
+    "root_cause": "free_to_sell_misunderstood",
+    "resolution": "Yes. The wholesale order allocated all 30, so free to sell is 0 and that is the figure pushed to Shopify. Explained on hand vs allocated vs free to sell. Customer chose to raise a PO for more stock and to set a safety buffer so the website keeps a small quantity back.",
+    "created_at": "2025-02-11"
+  },
+  {
+    "id": 3,
+    "subject": "Stock went negative after a stocktake",
+    "body": "We did a stocktake on Saturday and entered the counts Monday morning. Now three SKUs are showing negative free to sell. We definitely didn't sell more than we had.",
+    "category": "stock_figures",
+    "root_cause": "stock_adjustment_backdated",
+    "resolution": "The stocktake adjustments were entered with Saturday's date, but orders despatched on Saturday afternoon had already reduced stock. The backdated adjustment set on hand to the Saturday count and the despatches were then applied again. Re-entered the adjustments with the current date and time. Recommended freezing despatch during a count or counting after the last despatch of the day.",
+    "created_at": "2025-02-18"
+  },
+  {
+    "id": 4,
+    "subject": "Allocated quantity is higher than our open orders",
+    "body": "SKU BR-SOFA-3 shows allocated 7 but I can only find 5 open orders containing it. Where are the other 2 coming from?",
+    "category": "stock_figures",
+    "root_cause": "allocation_not_released_on_cancel",
+    "resolution": "Two orders had been cancelled in WooCommerce but the cancel webhook failed (store SSL certificate had expired for a day). Re-ran the sync for those order numbers and the allocation released. Added the two order numbers to the reply so they could confirm.",
+    "created_at": "2025-03-02"
+  },
+  {
+    "id": 5,
+    "subject": "Which figure is the real stock?",
+    "body": "Sorry if this is a daft question. The product page shows On hand, Allocated, On order and Free to sell. When I'm standing in the warehouse with a clipboard which one should match what I count?",
+    "category": "stock_figures",
+    "root_cause": "free_to_sell_misunderstood",
+    "resolution": "On hand is what should match the physical count. Allocated is reserved for open orders, On order is expected from suppliers, Free to sell is on hand minus allocated and is what channels see. Sent the stock figures help article.",
+    "created_at": "2025-03-05"
+  },
+  {
+    "id": 6,
+    "subject": "On order not going down after delivery arrived",
+    "body": "We received 200 units from our supplier on Tuesday but the product still shows 200 on order and on hand hasn't moved. The PO is still open.",
+    "category": "stock_figures",
+    "root_cause": "goods_in_not_booked",
+    "resolution": "The delivery had not been booked in against the PO. Walked them through Purchasing > PO > Receive goods. On hand increased and on order cleared once the receipt was saved.",
+    "created_at": "2025-03-09"
+  },
+  {
+    "id": 7,
+    "subject": "Stock import put everything in the wrong warehouse",
+    "body": "I imported our opening stock CSV and all 400 lines went into 'Main' but half of them should be in 'Unit 2'. There was a location column in my file.",
+    "category": "stock_figures",
+    "root_cause": "stock_import_wrong_location",
+    "resolution": "The location column header was 'Warehouse' and the importer expects 'Location'. Unmapped columns fall back to the default location. Provided a reversal import to zero the wrong lines and a corrected template. Suggested importing 10 rows as a test first.",
+    "created_at": "2025-03-14"
+  },
+  {
+    "id": 8,
+    "subject": "Stock doubled after merging two products",
+    "body": "We had the same dining chair listed twice by mistake and used the merge tool. Now the stock on the merged product is 48 when it should be 24.",
+    "category": "stock_figures",
+    "root_cause": "duplicate_sku_merge",
+    "resolution": "Both duplicates had been given the full 24 during the last stocktake, so merging summed them. Entered a stock adjustment of -24 with reason 'merge correction'. Explained that merge adds the quantities and to zero one side first in future.",
+    "created_at": "2025-03-20"
+  },
+  {
+    "id": 9,
+    "subject": "WooCommerce stock not updating after sale",
+    "body": "A customer bought the last 2 of a product on our website 20 minutes ago but the website still shows 2 available. Your system shows 0 free to sell. Someone else could buy them.",
+    "category": "stock_figures",
+    "root_cause": "channel_sync_interval",
+    "resolution": "Stock pushes to WooCommerce run every 15 minutes on their plan, and the push had queued behind a large price update. The level updated within the next cycle. Explained the interval and offered the 5 minute option on the higher tier.",
+    "created_at": "2025-03-22"
+  },
+  {
+    "id": 10,
+    "subject": "Oversold on two channels at once",
+    "body": "We sold the same single remaining sideboard on Shopify and on the Magento trade site within a couple of minutes of each other. Free to sell is now -1. How do we stop this?",
+    "category": "stock_figures",
+    "root_cause": "oversold_multi_channel",
+    "resolution": "Both channels had free to sell 1 and both orders arrived before the next stock push. Explained that cross-channel oversell on the last unit is a timing window. Set a safety buffer of 1 on high value low stock items so channels see 0 before the last unit goes.",
+    "created_at": "2025-04-01"
+  },
+  {
+    "id": 11,
+    "subject": "Stock showing under Unit 2 but it is physically in Main",
+    "body": "Some of our gin stock shows as 60 in Unit 2 and 0 in Main. All of it is in Main. We don't even use Unit 2 for spirits.",
+    "category": "stock_figures",
+    "root_cause": "stock_import_wrong_location",
+    "resolution": "A supplier delivery had been received against Unit 2 because that was the default location on the PO. Created a stock transfer Unit 2 to Main for 60. Changed the default receiving location on the supplier record.",
+    "created_at": "2025-04-06"
+  },
+  {
+    "id": 12,
+    "subject": "Gift box bundle stock makes no sense",
+    "body": "Our Christmas gift box is a bundle of 3 products. It shows free to sell 150 but we only have 40 boxes made up.",
+    "category": "stock_figures",
+    "root_cause": "kit_component_calculation",
+    "resolution": "Bundles calculate available stock from the lowest component, not from assembled boxes. The lowest component was 150. If they pre-assemble boxes, the bundle should be set up as a stocked kit with its own on hand figure instead. Converted it and set on hand to 40.",
+    "created_at": "2025-04-10"
+  },
+  {
+    "id": 13,
+    "subject": "Returns not putting stock back",
+    "body": "We've processed 6 returns this week through Shopify but the on hand figures haven't gone up. Do we have to add them manually?",
+    "category": "stock_figures",
+    "root_cause": "return_not_restocked",
+    "resolution": "Shopify refunds only restock if the 'Restock items' box is ticked when refunding. The 6 refunds had it unticked, so no restock event was sent. Booked the 6 units back in manually and showed them the tickbox.",
+    "created_at": "2025-04-15"
+  },
+  {
+    "id": 14,
+    "subject": "Stock figures changed overnight with no adjustment logged",
+    "body": "Yesterday evening our candle range showed correct figures. This morning 20 SKUs are different and there's nothing in the stock movement log.",
+    "category": "stock_figures",
+    "root_cause": "channel_sync_direction",
+    "resolution": "Shopify had been set as the stock master for that product group in the integration settings, so the nightly sync pulled Shopify's figures over ours. Changed the direction so we are the master. Movements from inbound syncs now appear in the log as 'Channel sync' as of the April release.",
+    "created_at": "2025-04-21"
+  },
+  {
+    "id": 15,
+    "subject": "Reduced quantity on an order but allocation didn't change",
+    "body": "A customer reduced their order from 10 to 4 chairs. I edited the order line but allocated still shows 10 for that SKU.",
+    "category": "stock_figures",
+    "root_cause": "allocation_not_released_on_edit",
+    "resolution": "The order had already been picked, and picked quantity is locked until the pick is un-picked. Reversed the pick, the allocation dropped to 4, re-picked. Explained the order of operations when editing a picked order.",
+    "created_at": "2025-04-28"
+  },
+  {
+    "id": 16,
+    "subject": "Free to sell includes our damaged stock",
+    "body": "We keep damaged units in a bay called DAMAGED. They are showing in free to sell and we've just sold two to a customer.",
+    "category": "stock_figures",
+    "root_cause": "location_not_excluded_from_sale",
+    "resolution": "The DAMAGED location was not flagged as non-sellable. Ticked 'Exclude from free to sell' on the location. Free to sell dropped immediately and the channels updated on the next push.",
+    "created_at": "2025-05-02"
+  },
+  {
+    "id": 17,
+    "subject": "Magento quantity different from your dashboard",
+    "body": "Magento shows 14 for a product and you show 9. We sell trade through Magento so it matters.",
+    "category": "stock_figures",
+    "root_cause": "channel_sync_interval",
+    "resolution": "Five units were allocated to a Shopify order that came in 6 minutes earlier; the Magento push had not run yet. Figures matched after the next push. Also found the Magento push was on a 30 minute interval and reduced it to 10.",
+    "created_at": "2025-05-08"
+  },
+  {
+    "id": 18,
+    "subject": "How do we do a full stocktake without messing up orders",
+    "body": "We want to count everything next weekend. Last time the numbers got confused because orders were still coming in. What's the right process?",
+    "category": "stock_figures",
+    "root_cause": "stocktake_process",
+    "resolution": "Sent the stocktake guide: finish the day's despatch, start a stocktake session (which snapshots on hand), count, enter counts into the session, then approve. Orders that arrive during the count are allocated but don't affect the snapshot.",
+    "created_at": "2025-05-12"
+  },
+  {
+    "id": 19,
+    "subject": "Cancelled Shopify order still holding stock",
+    "body": "Order #4471 was cancelled in Shopify on Monday but in your system it is still open and still allocating 2 units.",
+    "category": "stock_figures",
+    "root_cause": "allocation_not_released_on_cancel",
+    "resolution": "The cancel webhook arrived while the order was being picked, and a picked order cannot be auto-cancelled. The order showed a 'Cancel requested' flag. Un-picked and cancelled it, which released the allocation. Suggested checking the Cancel requested filter daily.",
+    "created_at": "2025-05-19"
+  },
+  {
+    "id": 20,
+    "subject": "Stock in cases but we sell in bottles",
+    "body": "We buy wine in cases of 6 and sell single bottles. Stock shows 20 after we received 20 cases, so now free to sell is 20 bottles when it should be 120.",
+    "category": "stock_figures",
+    "root_cause": "unit_of_measure",
+    "resolution": "The product had no purchase unit set, so the PO received 20 'each'. Set the supplier pack size to 6 on the product. Corrected the receipt so on hand became 120.",
+    "created_at": "2025-05-26"
+  },
+  {
+    "id": 21,
+    "subject": "Expired batch still showing as available",
+    "body": "A batch of our granola went past best before yesterday. It is still counted in free to sell and the website is still selling it.",
+    "category": "stock_figures",
+    "root_cause": "batch_expiry_not_excluded",
+    "resolution": "Batch expiry only removes stock from free to sell if 'Exclude expired batches' is on for the product group. Enabled it for Food. The 48 expired units dropped out of free to sell. Advised setting a buffer of days before expiry.",
+    "created_at": "2025-06-02"
+  },
+  {
+    "id": 22,
+    "subject": "Stock in transit between our two units",
+    "body": "We moved 100 units from Main to Unit 2 yesterday. Now Main shows 0 and Unit 2 shows 0 for that product. Where did it go?",
+    "category": "stock_figures",
+    "root_cause": "transfer_in_transit",
+    "resolution": "The transfer was despatched from Main but not received at Unit 2, so the stock sits in 'In transit' and is not shown as on hand at either location. Received the transfer at Unit 2. Pointed to the In transit view under Stock.",
+    "created_at": "2025-06-08"
+  },
+  {
+    "id": 23,
+    "subject": "Imported stock quantities lost their decimals",
+    "body": "We sell fabric by the metre. Imported 12.5 metres and it shows 12.",
+    "category": "stock_figures",
+    "root_cause": "import_decimal_precision",
+    "resolution": "The product was set to whole units. Changed the unit to 'metre' with 2 decimal places and re-imported the affected lines.",
+    "created_at": "2025-06-15"
+  },
+  {
+    "id": 24,
+    "subject": "Cancelled PO still showing as on order",
+    "body": "We cancelled a PO with our supplier last week but the 300 units still show in the on order column.",
+    "category": "stock_figures",
+    "root_cause": "po_cancel_not_released",
+    "resolution": "The PO had been marked 'closed' rather than 'cancelled'. Closed keeps outstanding lines on order for reporting. Re-opened and cancelled it; on order dropped to 0.",
+    "created_at": "2025-06-22"
+  },
+  {
+    "id": 25,
+    "subject": "Shopify order imported twice",
+    "body": "Order #1088 appears twice in your system, once as 1088 and again as 1088-1. We nearly shipped it twice. The customer edited the order in Shopify to add a cushion after placing it.",
+    "category": "order_import",
+    "root_cause": "shopify_edit_creates_duplicate",
+    "resolution": "Order edits in Shopify send an order updated webhook. The original order had already been picked, and a picked order cannot be modified, so the system created a child order 1088-1 for the added line. Explained that the child order is intentional and only contains the new line. Setting 'Hold edits for review' prevents automatic child orders.",
+    "created_at": "2025-01-14"
+  },
+  {
+    "id": 26,
+    "subject": "Order missing from Shopify",
+    "body": "A customer phoned to chase order #2210 placed on Sunday night. It is in Shopify but not in your system. All the other Sunday orders are there.",
+    "category": "order_import",
+    "root_cause": "webhook_failed_not_retried",
+    "resolution": "The order created webhook returned a 500 from our side during a deploy at 23:14 on Sunday. Shopify retries for 48 hours but the retry had not fired yet. Ran a manual pull for the order number. Deploys have since moved to 03:00.",
+    "created_at": "2025-01-21"
+  },
+  {
+    "id": 27,
+    "subject": "Orders arriving 40 minutes late",
+    "body": "Since this morning Shopify orders take about 40 minutes to show up. Normally it is instant. We cut off for next day delivery at 2pm so this is a problem.",
+    "category": "order_import",
+    "root_cause": "webhook_queue_backlog",
+    "resolution": "A bulk product import by another account filled the shared webhook queue. Orders were processed in order of arrival, hence the delay. Engineering moved order webhooks to a priority queue. Delay was back to under a minute by 11:30.",
+    "created_at": "2025-01-28"
+  },
+  {
+    "id": 28,
+    "subject": "WooCommerce order attached to the wrong customer",
+    "body": "Order 5520 from Woo has come in under a different customer's name and address in your system. The order in Woo is correct.",
+    "category": "order_import",
+    "root_cause": "customer_match_on_email",
+    "resolution": "Customers are matched on email. Two customers shared an office email address, so the order attached to the first match. Split the customer record and re-imported the order. Suggested matching on email plus postcode in integration settings.",
+    "created_at": "2025-02-04"
+  },
+  {
+    "id": 29,
+    "subject": "Magento orders failing to import with 'unknown SKU'",
+    "body": "Our trade orders from Magento are stuck with an error 'unknown SKU TBL-OAK-180-NAT'. The product exists.",
+    "category": "order_import",
+    "root_cause": "sku_mapping_missing",
+    "resolution": "The SKU in Magento was TBL-OAK-180-NAT and in our system TBL-OAK-180-N. Added a channel SKU alias on the product and re-ran the failed imports. Shared the SKU mismatch report.",
+    "created_at": "2025-02-10"
+  },
+  {
+    "id": 30,
+    "subject": "Order duplicated after I changed the shipping address in Shopify",
+    "body": "I corrected a postcode on order #3321 in Shopify and now there are two copies of the order on your side.",
+    "category": "order_import",
+    "root_cause": "shopify_edit_creates_duplicate",
+    "resolution": "The order was in 'picked' status when the update arrived. Address changes to picked orders create a review copy rather than overwriting the picked order. Merged the copy into the original and explained the behaviour. Address edits before picking apply in place.",
+    "created_at": "2025-02-17"
+  },
+  {
+    "id": 31,
+    "subject": "Orders importing with zero price",
+    "body": "Everything that used the discount code SPRING20 has imported with line prices of 0.00. The orders in Shopify show the correct discounted prices.",
+    "category": "order_import",
+    "root_cause": "discount_mapping",
+    "resolution": "The discount was an order level 'free shipping and 20%' automatic discount, which Shopify reports differently from code discounts. A bug in our mapping treated it as 100%. Fixed in release 2025.2.3 and re-imported the 14 orders.",
+    "created_at": "2025-02-24"
+  },
+  {
+    "id": 32,
+    "subject": "Shipping method shows as 'Unmapped' on new orders",
+    "body": "Since we added a Saturday delivery option on the website, those orders come through with shipping method Unmapped and don't go to the courier.",
+    "category": "order_import",
+    "root_cause": "shipping_method_not_mapped",
+    "resolution": "New channel shipping methods need mapping to a courier service. Mapped 'Saturday Delivery' to DPD Saturday under Integrations > Shopify > Shipping. Re-assigned the 9 waiting orders.",
+    "created_at": "2025-03-03"
+  },
+  {
+    "id": 33,
+    "subject": "Orders stuck in Pending import",
+    "body": "We have 22 orders sitting in Pending import for over an hour. Nothing is coming through to the pick list.",
+    "category": "order_import",
+    "root_cause": "webhook_queue_backlog",
+    "resolution": "A product feed with 60,000 variants was being processed on the same account and blocked the order queue. Paused the feed, orders cleared in 4 minutes. Feeds now run in a separate worker.",
+    "created_at": "2025-03-10"
+  },
+  {
+    "id": 34,
+    "subject": "Test orders being imported",
+    "body": "Our web developer is placing test orders using Shopify's Bogus gateway and they are turning up in our pick list.",
+    "category": "order_import",
+    "root_cause": "test_orders_not_filtered",
+    "resolution": "Enabled 'Ignore test orders' in the Shopify integration settings. Cancelled the 5 test orders already imported.",
+    "created_at": "2025-03-17"
+  },
+  {
+    "id": 35,
+    "subject": "Order came through with lines missing",
+    "body": "Order 7781 in Woo has 4 lines, in your system only 2. Both missing lines are hampers.",
+    "category": "order_import",
+    "root_cause": "bundle_line_expansion",
+    "resolution": "The hampers were WooCommerce composite products whose child items were not mapped. The parent SKU did not exist on our side so the lines were dropped with a warning in the import log. Created the two hamper products as kits and re-imported.",
+    "created_at": "2025-03-24"
+  },
+  {
+    "id": 36,
+    "subject": "On hold WooCommerce orders being imported",
+    "body": "Orders that are 'on hold' in Woo (bank transfer not yet received) are importing and getting picked. We only want paid ones.",
+    "category": "order_import",
+    "root_cause": "order_status_filter",
+    "resolution": "The import status filter included On hold. Removed it so only Processing orders import. On hold orders import automatically when they move to Processing.",
+    "created_at": "2025-03-31"
+  },
+  {
+    "id": 37,
+    "subject": "PayPal order never arrived",
+    "body": "Order #4102 paid by PayPal on Friday, customer has a confirmation email, nothing on your side.",
+    "category": "order_import",
+    "root_cause": "payment_status_filter",
+    "resolution": "The PayPal payment was in 'pending review' in Shopify for 3 days, so financial status was 'pending' and the import filter (paid only) skipped it. It imported automatically once PayPal cleared it. Explained the filter.",
+    "created_at": "2025-04-07"
+  },
+  {
+    "id": 38,
+    "subject": "Draft orders not coming through",
+    "body": "We create orders for phone customers as Shopify draft orders and complete them. They don't import.",
+    "category": "order_import",
+    "root_cause": "draft_order_not_supported",
+    "resolution": "Draft orders import only once completed, and only if the completion sends an order created webhook, which it does when payment is marked as collected. The orders had been completed with 'payment due later'. Suggested marking as paid or creating the order directly in our system.",
+    "created_at": "2025-04-14"
+  },
+  {
+    "id": 39,
+    "subject": "Duplicate order after typing it in manually",
+    "body": "A customer rang, I keyed the order in by hand, then they also ordered online. Now we have two orders for the same thing.",
+    "category": "order_import",
+    "root_cause": "manual_then_channel_duplicate",
+    "resolution": "Not a sync fault; two genuinely separate orders were created. Cancelled the manual one and refunded nothing since the online one was the paid one. Suggested using 'Create Shopify order' from our side so phone orders exist in one place.",
+    "created_at": "2025-04-21"
+  },
+  {
+    "id": 40,
+    "subject": "Order imported in the wrong currency",
+    "body": "A customer in Ireland paid in EUR but the order shows as GBP with the EUR numbers, so the totals are wrong.",
+    "category": "order_import",
+    "root_cause": "multi_currency_mapping",
+    "resolution": "Shopify Markets was sending presentment currency and our mapping used shop currency. Enabled 'Use presentment currency' in the integration. Corrected the one order manually.",
+    "created_at": "2025-04-28"
+  },
+  {
+    "id": 41,
+    "subject": "Orders delayed after the Shopify outage",
+    "body": "Shopify was down for an hour this afternoon. It's back but orders placed since are taking 20 to 30 minutes to appear.",
+    "category": "order_import",
+    "root_cause": "webhook_queue_backlog",
+    "resolution": "After an outage Shopify replays queued webhooks for all stores at once, so arrival at our side spikes. The backlog cleared within 45 minutes. No action needed; all orders arrived.",
+    "created_at": "2025-05-05"
+  },
+  {
+    "id": 42,
+    "subject": "Customer order notes missing",
+    "body": "Customers leave delivery instructions at checkout. They are in Shopify but not showing on our despatch notes.",
+    "category": "order_import",
+    "root_cause": "notes_field_mapping",
+    "resolution": "Shopify's 'note' field was mapped to internal notes, not to delivery instructions. Changed the mapping and updated the despatch note template to print delivery instructions.",
+    "created_at": "2025-05-12"
+  },
+  {
+    "id": 43,
+    "subject": "Order dates are an hour out",
+    "body": "Orders placed at 23:30 show as the next day in your reports. It's been like this since the clocks changed.",
+    "category": "order_import",
+    "root_cause": "timezone_offset",
+    "resolution": "Account timezone was set to UTC rather than Europe/London. Changed it; order timestamps now display in local time. Historic data unaffected in storage, only display.",
+    "created_at": "2025-05-19"
+  },
+  {
+    "id": 44,
+    "subject": "Order missing because it was archived?",
+    "body": "Order #5566 is nowhere in your system. I notice it's in the Archived tab in Shopify. Is that related?",
+    "category": "order_import",
+    "root_cause": "archived_order_filter",
+    "resolution": "Yes. The order was auto-archived by Shopify because it was fulfilled manually by a staff member before import. Fulfilled orders are skipped by design. Imported it as a completed order for records.",
+    "created_at": "2025-05-26"
+  },
+  {
+    "id": 45,
+    "subject": "Magento order appears twice with different numbers",
+    "body": "Trade order 000012345 appears as both 000012345 and 12345.",
+    "category": "order_import",
+    "root_cause": "magento_increment_id_format",
+    "resolution": "After a Magento upgrade the increment ID format changed and a backfill matched on the new format while live import used the old. Merged the duplicates and fixed the matching to normalise leading zeros.",
+    "created_at": "2025-06-02"
+  },
+  {
+    "id": 46,
+    "subject": "All last week's orders duplicated after reconnecting store",
+    "body": "We had to reconnect the Shopify integration after changing the store owner. Now every order from the last 7 days has imported again.",
+    "category": "order_import",
+    "root_cause": "reconnect_backfill_duplicate",
+    "resolution": "Reconnecting runs a 7 day backfill. Orders should dedupe on Shopify order ID, but the reconnect was to a new Shopify app installation which issues new IDs. Bulk cancelled the 61 duplicates using the import batch ID. Reconnect now asks before backfilling.",
+    "created_at": "2025-06-09"
+  },
+  {
+    "id": 47,
+    "subject": "Warehouse picked the old quantity",
+    "body": "Customer changed their order from 6 chairs to 4 on Monday. The pick list still said 6 and we shipped 6. The order in your system says 4. How did this happen?",
+    "category": "despatch",
+    "root_cause": "picked_old_quantity",
+    "resolution": "The pick list PDF had been printed before the order was edited. Printed pick lists are static. Enabled 'Reprint required on edit' which flags the order in the pick screen and voids the old list. Advised picking from the scanner app which always shows current quantities.",
+    "created_at": "2025-01-16"
+  },
+  {
+    "id": 48,
+    "subject": "Part shipment left a back order open that we don't want",
+    "body": "We shipped 8 of 10 units and the customer said don't bother with the last 2. The order still shows a back order of 2 and 2 units allocated.",
+    "category": "despatch",
+    "root_cause": "part_shipment_back_order_open",
+    "resolution": "Part despatch creates a back order for the remainder by default. Cancelled the back order line which released the allocation and marked the order complete. Showed the 'Despatch and close' option for future part shipments where the rest is not wanted.",
+    "created_at": "2025-01-23"
+  },
+  {
+    "id": 49,
+    "subject": "Courier label shows 0.1kg for a wardrobe",
+    "body": "DPD rejected our consignment because weight was 0.1 kg. It's a wardrobe.",
+    "category": "despatch",
+    "root_cause": "product_weight_not_set",
+    "resolution": "The product had no weight, so the default 0.1 kg was used. Entered weights for the furniture range via bulk edit. Set a validation rule to block label creation when any line is missing weight.",
+    "created_at": "2025-01-30"
+  },
+  {
+    "id": 50,
+    "subject": "Despatch note printed the old address",
+    "body": "Customer updated their address on Shopify before we shipped, our system shows the new address, but the despatch note and the label had the old one.",
+    "category": "despatch",
+    "root_cause": "documents_generated_before_edit",
+    "resolution": "The label and despatch note were generated at pick time, before the address update arrived. Documents are snapshots. Turned on 'Regenerate documents on address change' for orders not yet despatched.",
+    "created_at": "2025-02-06"
+  },
+  {
+    "id": 51,
+    "subject": "Order shipped but still shows awaiting despatch",
+    "body": "We handed 30 parcels to Royal Mail yesterday. 28 moved to despatched, 2 are still awaiting despatch and the customers haven't had tracking emails.",
+    "category": "despatch",
+    "root_cause": "courier_tracking_not_returned",
+    "resolution": "Royal Mail's API timed out for two manifest lines, so no tracking number came back and the status did not advance. Re-requested tracking from the courier screen. Both updated and emails went out.",
+    "created_at": "2025-02-13"
+  },
+  {
+    "id": 52,
+    "subject": "Back order shipped twice",
+    "body": "We shipped the back order for order 1193 on Tuesday, then it appeared in the pick list again Thursday and got shipped again.",
+    "category": "despatch",
+    "root_cause": "back_order_duplicate_despatch",
+    "resolution": "The Tuesday despatch was recorded against the parent order rather than the back order line, leaving the back order open. Marked the back order as despatched with a note. Raised a return for the second parcel. Pick list now hides back orders whose parent has a despatch covering the quantity.",
+    "created_at": "2025-02-20"
+  },
+  {
+    "id": 53,
+    "subject": "Pick list groups orders in a strange order",
+    "body": "Pick lists seem to be ordered by customer name. We'd like them by bin location so pickers don't walk back and forth.",
+    "category": "despatch",
+    "root_cause": "pick_list_sort_setting",
+    "resolution": "Changed Despatch > Pick settings > Sort to 'Bin location'. Also enabled wave picking so multiple orders combine into one walk.",
+    "created_at": "2025-02-27"
+  },
+  {
+    "id": 54,
+    "subject": "DPD integration error 'invalid account'",
+    "body": "Since this morning every label fails with 'invalid account'. Nothing has changed on our side.",
+    "category": "despatch",
+    "root_cause": "courier_credentials_expired",
+    "resolution": "DPD rotated the API password on the account at the customer's request to their account manager. Entered the new password under Couriers > DPD. Labels worked immediately.",
+    "created_at": "2025-03-06"
+  },
+  {
+    "id": 55,
+    "subject": "Shopify marked as fulfilled before we actually ship",
+    "body": "Customers are getting 'your order has shipped' emails from Shopify when we print the label, sometimes a day before it leaves.",
+    "category": "despatch",
+    "root_cause": "fulfilment_sync_trigger",
+    "resolution": "Fulfilment sync trigger was set to 'On label print'. Changed to 'On manifest close' so Shopify is updated when the courier collects.",
+    "created_at": "2025-03-13"
+  },
+  {
+    "id": 56,
+    "subject": "Partial shipments not updating Shopify",
+    "body": "When we ship part of an order the customer gets no notification and Shopify still shows unfulfilled for the whole order.",
+    "category": "despatch",
+    "root_cause": "partial_fulfilment_disabled",
+    "resolution": "Partial fulfilment sync was off. Enabled it. Shopify now shows partially fulfilled with the shipped lines and sends the customer a notification for each shipment.",
+    "created_at": "2025-03-20"
+  },
+  {
+    "id": 57,
+    "subject": "Picked the wrong colour twice this week",
+    "body": "Our pickers keep picking the grey cushion instead of the charcoal one. The scanner doesn't stop them.",
+    "category": "despatch",
+    "root_cause": "barcode_not_set",
+    "resolution": "The charcoal variant had no barcode, so the scanner accepted any scan for that line. Added barcodes to all variants and enabled 'Require barcode scan for every line'.",
+    "created_at": "2025-03-27"
+  },
+  {
+    "id": 58,
+    "subject": "Despatched order but stock didn't reduce",
+    "body": "We despatched 40 units of a product this morning. On hand still shows the pre-despatch number.",
+    "category": "despatch",
+    "root_cause": "despatch_without_pick",
+    "resolution": "The order was despatched using 'Mark as despatched' without a pick, which records the shipment but relies on the pick to move stock. Created the pick retrospectively. Disabled Mark as despatched for warehouse users.",
+    "created_at": "2025-04-03"
+  },
+  {
+    "id": 59,
+    "subject": "Back order disappeared and customer is still waiting",
+    "body": "Order 2250 had 3 units on back order. The back order is gone and the order is marked complete, but we never shipped the 3.",
+    "category": "despatch",
+    "root_cause": "back_order_cancelled_by_edit",
+    "resolution": "A colleague had edited the order quantity down to the shipped amount, which removes the back order. The audit log showed the edit. Re-added the 3 units as a new line and allocated stock.",
+    "created_at": "2025-04-10"
+  },
+  {
+    "id": 60,
+    "subject": "Packing slips not showing batch numbers",
+    "body": "Our food customers need batch numbers on packing slips for traceability. They used to be there.",
+    "category": "despatch",
+    "root_cause": "document_template_setting",
+    "resolution": "The packing slip template had been reset to default during a template edit. Re-enabled the batch column in Settings > Documents > Packing slip.",
+    "created_at": "2025-04-17"
+  },
+  {
+    "id": 61,
+    "subject": "Despatch date wrong in exports",
+    "body": "Orders despatched at 5pm show the next day's date in the despatch export.",
+    "category": "despatch",
+    "root_cause": "timezone_offset",
+    "resolution": "Export used UTC. Added a 'Use account timezone in exports' setting and enabled it. Same root cause as order timestamps on this account.",
+    "created_at": "2025-04-24"
+  },
+  {
+    "id": 62,
+    "subject": "Can't despatch because stock allocated to another order",
+    "body": "We have 5 in stock. Order A wants 5, Order B wants 5. Order B is more urgent but everything is allocated to A.",
+    "category": "despatch",
+    "root_cause": "allocation_priority",
+    "resolution": "Allocation is first come first served. Used 'De-allocate' on order A and 'Allocate now' on order B. Explained the priority flag which bumps an order to the front of allocation.",
+    "created_at": "2025-05-01"
+  },
+  {
+    "id": 63,
+    "subject": "Picker picked 2 when the order was increased to 5",
+    "body": "Customer phoned to add 3 more of the same item. We updated the order but the picker had already started and only 2 went out.",
+    "category": "despatch",
+    "root_cause": "picked_old_quantity",
+    "resolution": "The pick was in progress on the scanner when the order changed. In-progress picks are locked. The extra 3 remained as an open back order. Despatched the back order the same day. Suggested enabling the 'order changed' alert on the scanner.",
+    "created_at": "2025-05-08"
+  },
+  {
+    "id": 64,
+    "subject": "Bulk despatch shipped orders that weren't ready",
+    "body": "I selected 'all on this page' and clicked despatch. It included 6 orders that hadn't been picked.",
+    "category": "despatch",
+    "root_cause": "bulk_action_filter",
+    "resolution": "Bulk despatch acts on the selection regardless of status. Reversed the 6 despatches. Added a confirmation that lists any unpicked orders in the selection.",
+    "created_at": "2025-05-15"
+  },
+  {
+    "id": 65,
+    "subject": "Xero invoices have 20% VAT on zero rated food",
+    "body": "All our Xero invoices this month show 20% VAT on products that are zero rated (bread, flour). Our accountant has flagged it. The products are set to zero rated in your system.",
+    "category": "accounting_sync",
+    "root_cause": "xero_tax_rate_mapping",
+    "resolution": "The Xero tax rate mapping had 'Zero rated' pointing to Xero's '20% (VAT on Income)' code after the Xero chart of accounts was rebuilt. Corrected the mapping under Integrations > Xero > Tax rates. Voided and re-synced the 112 affected invoices.",
+    "created_at": "2025-01-20"
+  },
+  {
+    "id": 66,
+    "subject": "Invoice duplicated in Xero",
+    "body": "Order 3310 has two invoices in Xero, INV-3310 and INV-3310 again with a different Xero ID. We edited the order after it had synced.",
+    "category": "accounting_sync",
+    "root_cause": "invoice_duplicated_on_resync",
+    "resolution": "Editing an order after invoice sync should update the existing Xero invoice, but that invoice had been approved and paid in Xero, which locks it. The sync then created a new one. Voided the duplicate. Enabled 'Create credit note and new invoice on edit after payment' to make this explicit.",
+    "created_at": "2025-01-27"
+  },
+  {
+    "id": 67,
+    "subject": "Xero sync stuck since Friday",
+    "body": "Nothing has synced to Xero since Friday afternoon. The integration page says 'Last sync: 3 days ago'. We haven't touched anything.",
+    "category": "accounting_sync",
+    "root_cause": "sync_stuck_auth_expired",
+    "resolution": "The Xero connection token had expired because the Xero user who authorised it had their Xero access removed. Reconnected using a different Xero user with Adviser role. Queue of 140 invoices synced within 10 minutes.",
+    "created_at": "2025-02-03"
+  },
+  {
+    "id": 68,
+    "subject": "QuickBooks putting sales into the wrong account",
+    "body": "All sales are going to 'Uncategorised Income' in QuickBooks instead of our Sales account.",
+    "category": "accounting_sync",
+    "root_cause": "account_mapping",
+    "resolution": "Default income account was not set in the QuickBooks integration. Set it to Sales and set per product group overrides for Wholesale. Re-posted the month's invoices.",
+    "created_at": "2025-02-10"
+  },
+  {
+    "id": 69,
+    "subject": "Shipping charge missing from Xero invoices",
+    "body": "Invoices in Xero are short by the delivery charge on every order.",
+    "category": "accounting_sync",
+    "root_cause": "shipping_account_mapping",
+    "resolution": "No Xero account was mapped for shipping, so the line was skipped with a warning. Mapped shipping to account 220 Delivery Income and re-synced.",
+    "created_at": "2025-02-17"
+  },
+  {
+    "id": 70,
+    "subject": "Every order creates a new contact in Xero",
+    "body": "We have 'The Bakery Ltd' 14 times in Xero now.",
+    "category": "accounting_sync",
+    "root_cause": "contact_matching",
+    "resolution": "Contact matching was on exact name, and the channel sent slight variations (trailing space, 'Ltd' vs 'Ltd.'). Switched to match on email, then name. Merged the duplicates in Xero.",
+    "created_at": "2025-02-24"
+  },
+  {
+    "id": 71,
+    "subject": "Xero invoice numbers out of sequence",
+    "body": "Our invoice numbers in Xero jump around. Accountant says HMRC expects sequential.",
+    "category": "accounting_sync",
+    "root_cause": "invoice_number_source",
+    "resolution": "Invoice number was set to use the channel order number, which is not sequential across channels. Changed to 'Xero generates number'. Historic numbers are still valid, just not contiguous.",
+    "created_at": "2025-03-03"
+  },
+  {
+    "id": 72,
+    "subject": "VAT charged on EU export invoices",
+    "body": "Invoices for our Dutch customers show UK VAT in Xero. They should be zero rated exports.",
+    "category": "accounting_sync",
+    "root_cause": "xero_tax_rate_mapping",
+    "resolution": "The tax rule for non UK delivery addresses was not configured, so the product default rate applied. Added a rule: delivery country outside UK -> Zero Rated Income. Re-synced the quarter's EU invoices.",
+    "created_at": "2025-03-10"
+  },
+  {
+    "id": 73,
+    "subject": "Payments not showing in Xero",
+    "body": "Invoices sync fine but they all sit as awaiting payment in Xero, even though the customers paid at checkout.",
+    "category": "accounting_sync",
+    "root_cause": "payment_sync_disabled",
+    "resolution": "Payment sync was off and no clearing bank account was selected. Enabled it with a 'Shopify Payments' clearing account so invoices are marked paid and the payout can be reconciled.",
+    "created_at": "2025-03-17"
+  },
+  {
+    "id": 74,
+    "subject": "Refunds not creating credit notes",
+    "body": "We refunded 4 orders this week. The invoices are still fully paid in Xero.",
+    "category": "accounting_sync",
+    "root_cause": "refund_sync_disabled",
+    "resolution": "Credit note sync is a separate toggle and was off. Enabled it. Created the 4 credit notes manually in our system and they synced.",
+    "created_at": "2025-03-24"
+  },
+  {
+    "id": 75,
+    "subject": "Xero sync slow with 'rate limit' in the log",
+    "body": "After our Black Friday weekend the sync log is full of 'rate limit exceeded' and invoices are trickling through.",
+    "category": "accounting_sync",
+    "root_cause": "xero_rate_limit",
+    "resolution": "Xero allows 60 calls a minute per org. 2,400 invoices queued and were throttled. The queue is processed automatically; it cleared in about 3 hours. Suggested daily summary invoices for high volume B2C.",
+    "created_at": "2025-03-31"
+  },
+  {
+    "id": 76,
+    "subject": "Penny differences between order and Xero invoice",
+    "body": "Some invoices in Xero are 1p different from the order total. Our bookkeeper has to adjust each one.",
+    "category": "accounting_sync",
+    "root_cause": "vat_rounding",
+    "resolution": "Shopify rounds VAT per line, Xero rounds per invoice. Enabled 'Send VAT amount per line' so Xero uses our figures rather than recalculating.",
+    "created_at": "2025-04-07"
+  },
+  {
+    "id": 77,
+    "subject": "Invoices going to the wrong Xero organisation",
+    "body": "We run two companies in Xero. Our invoices have started appearing in the other company's Xero.",
+    "category": "accounting_sync",
+    "root_cause": "wrong_xero_tenant",
+    "resolution": "The connection had been reauthorised and the other organisation was selected in the Xero consent screen. Reconnected and chose the correct organisation. Voided the 18 invoices in the wrong org and re-synced.",
+    "created_at": "2025-04-14"
+  },
+  {
+    "id": 78,
+    "subject": "Invoices arrive in Xero as drafts",
+    "body": "Every invoice lands as a draft and someone has to approve them one by one.",
+    "category": "accounting_sync",
+    "root_cause": "invoice_status_setting",
+    "resolution": "Invoice status on sync was set to Draft. Changed to Authorised. Explained Draft is useful during setup for checking mappings.",
+    "created_at": "2025-04-21"
+  },
+  {
+    "id": 79,
+    "subject": "QuickBooks disconnected again",
+    "body": "Second time this month QuickBooks shows disconnected. We reconnect and it works for a week.",
+    "category": "accounting_sync",
+    "root_cause": "sync_stuck_auth_expired",
+    "resolution": "QuickBooks refresh tokens expire after 100 days of no use, but here the token was being invalidated because the same QuickBooks user was also connected to another app that revoked sessions. Connected using a dedicated QuickBooks user. Stable since.",
+    "created_at": "2025-04-28"
+  },
+  {
+    "id": 80,
+    "subject": "Invoices duplicated after we reconnected Xero",
+    "body": "After reconnecting Xero last week, last month's invoices have all appeared again.",
+    "category": "accounting_sync",
+    "root_cause": "invoice_duplicated_on_resync",
+    "resolution": "Reconnecting to a different Xero organisation (they had moved to a new Xero file) resets the sync markers, so unsynced invoices were sent again. This was expected for a new file but not communicated. Voided the duplicates in the old org.",
+    "created_at": "2025-05-05"
+  },
+  {
+    "id": 81,
+    "subject": "Tracking categories blank on Xero invoices",
+    "body": "We use Xero tracking categories for Channel (Web, Trade, Shows). Invoices from your system have no tracking category.",
+    "category": "accounting_sync",
+    "root_cause": "tracking_category_mapping",
+    "resolution": "Mapped sales channel to the Xero tracking category under Integrations > Xero > Tracking. Applies to new invoices only.",
+    "created_at": "2025-05-12"
+  },
+  {
+    "id": 82,
+    "subject": "Xero totals are 20% higher than the order",
+    "body": "A £120 order appears in Xero as £144.",
+    "category": "accounting_sync",
+    "root_cause": "price_tax_inclusive_setting",
+    "resolution": "Prices were sent as tax exclusive but the channel prices include VAT. Set 'Prices include tax' on the Shopify channel. Re-synced the affected invoices.",
+    "created_at": "2025-05-19"
+  },
+  {
+    "id": 83,
+    "subject": "Invoice date is the order date not the despatch date",
+    "body": "Our accountant wants invoices dated when goods leave, not when ordered. Pre-orders are being invoiced months early.",
+    "category": "accounting_sync",
+    "root_cause": "invoice_date_setting",
+    "resolution": "Changed invoice trigger from 'On order' to 'On despatch'. Pre-orders now invoice when shipped.",
+    "created_at": "2025-05-26"
+  },
+  {
+    "id": 84,
+    "subject": "Cancelled order still has a live invoice in Xero",
+    "body": "We cancelled order 4410 before shipping but the invoice is still sitting in Xero as awaiting payment.",
+    "category": "accounting_sync",
+    "root_cause": "cancel_not_voiding_invoice",
+    "resolution": "Invoices had synced on order, so cancelling after sync requires voiding. 'Void invoice on cancel' was off. Turned it on and voided the one invoice.",
+    "created_at": "2025-06-02"
+  },
+  {
+    "id": 85,
+    "subject": "Sync stuck on one invoice with a red error",
+    "body": "Sync log shows one invoice erroring every 10 minutes with 'Item code not found' and nothing after it is syncing.",
+    "category": "accounting_sync",
+    "root_cause": "xero_item_code_missing",
+    "resolution": "The invoice referenced a product whose Xero item code had been deleted in Xero. Cleared the item code on the product so the line syncs as a description only line. Queue resumed. Failed items no longer block the queue since the June release.",
+    "created_at": "2025-06-09"
+  },
+  {
+    "id": 86,
+    "subject": "QuickBooks VAT codes wrong on reduced rate items",
+    "body": "Our 5% items (children's car seats) are posting to QuickBooks at 20%.",
+    "category": "accounting_sync",
+    "root_cause": "qb_tax_code_mapping",
+    "resolution": "The reduced rate mapping was missing so default applied. Mapped Reduced 5% to the QuickBooks 5% R code. Corrected the 23 transactions.",
+    "created_at": "2025-06-16"
+  },
+  {
+    "id": 87,
+    "subject": "No purchase order suggested even though we are short",
+    "body": "We have 30 units of our best selling table on back order and free to sell is -30. The suggested purchase orders screen is empty for it.",
+    "category": "purchasing",
+    "root_cause": "po_not_generated_from_shortfall",
+    "resolution": "The product had no default supplier, and suggestions are grouped by supplier so it was excluded. Set the supplier and the suggestion appeared for 30 plus reorder quantity. Added a 'products with shortfall but no supplier' warning to the screen.",
+    "created_at": "2025-01-22"
+  },
+  {
+    "id": 88,
+    "subject": "Reorder suggestions ignore supplier lead time",
+    "body": "Our Italian supplier takes 8 weeks. The suggestions only tell us to order when we are nearly out, which is far too late.",
+    "category": "purchasing",
+    "root_cause": "supplier_lead_time_ignored",
+    "resolution": "Lead time was set on the supplier record but the product had its own lead time override of 0 days from the import. Cleared the product overrides so the supplier's 56 days applies. Suggestions now trigger when forecast cover drops below lead time plus safety.",
+    "created_at": "2025-01-29"
+  },
+  {
+    "id": 89,
+    "subject": "PO raised for 12 units but supplier sells in boxes of 12",
+    "body": "We need 12 bottles. The PO said quantity 12 and the supplier sent 12 boxes (144 bottles).",
+    "category": "purchasing",
+    "root_cause": "po_unit_of_measure",
+    "resolution": "Supplier pack size on the product was blank, so the PO quantity was in each and the supplier read it as boxes. Set pack size 12 and 'Order in packs'. PO now shows 1 box (12 bottles).",
+    "created_at": "2025-02-05"
+  },
+  {
+    "id": 90,
+    "subject": "PO went to the wrong supplier",
+    "body": "A suggested PO for our olive oil went to our packaging supplier.",
+    "category": "purchasing",
+    "root_cause": "default_supplier_wrong",
+    "resolution": "The product's default supplier had been set incorrectly during a bulk edit. Corrected it and cancelled the PO. Suggested the supplier audit report.",
+    "created_at": "2025-02-12"
+  },
+  {
+    "id": 91,
+    "subject": "Suggesting reorder for stock already on order",
+    "body": "We have a PO for 500 units arriving next week. The suggestions still say order 500 more.",
+    "category": "purchasing",
+    "root_cause": "draft_po_not_counted",
+    "resolution": "The PO was still in Draft, and draft POs do not count as on order. Approved the PO and the suggestion cleared.",
+    "created_at": "2025-02-19"
+  },
+  {
+    "id": 92,
+    "subject": "PO emails not reaching supplier",
+    "body": "We click Send and it says sent, but the supplier never receives it.",
+    "category": "purchasing",
+    "root_cause": "supplier_email_missing",
+    "resolution": "The supplier record had no email and the send used the account's fallback email, which was an unmonitored address. Added the supplier email. Send now shows a warning when the supplier email is blank.",
+    "created_at": "2025-02-26"
+  },
+  {
+    "id": 93,
+    "subject": "Received part of a PO and the rest vanished",
+    "body": "PO for 100, received 60, now the PO shows complete and the 40 is gone from on order.",
+    "category": "purchasing",
+    "root_cause": "goods_in_closed_short",
+    "resolution": "The receipt was saved with 'Close PO' ticked, which writes off the outstanding 40. Re-opened the PO and reinstated the 40 outstanding.",
+    "created_at": "2025-03-05"
+  },
+  {
+    "id": 94,
+    "subject": "Reorder suggestions miss our seasonal peak",
+    "body": "Suggestions are based on recent sales, so in September they suggest nothing for Christmas lines that sell 10x in November.",
+    "category": "purchasing",
+    "root_cause": "forecast_window",
+    "resolution": "Forecast was set to trailing 30 days. Changed to 'Same period last year' for the Seasonal product group. Explained the per group forecast method option.",
+    "created_at": "2025-03-12"
+  },
+  {
+    "id": 95,
+    "subject": "PO cost prices are last year's",
+    "body": "POs are generated with the old cost price. Our supplier put prices up in January.",
+    "category": "purchasing",
+    "root_cause": "supplier_price_not_updated",
+    "resolution": "Supplier price list had not been updated. Imported the new price list CSV against the supplier. POs use the supplier price list, not the product cost field.",
+    "created_at": "2025-03-19"
+  },
+  {
+    "id": 96,
+    "subject": "Suggested PO for a discontinued product",
+    "body": "We stopped selling the walnut bench. The system wants us to order 20 more.",
+    "category": "purchasing",
+    "root_cause": "product_status_active",
+    "resolution": "The product was still Active with a reorder point. Set status to Discontinued, which removes it from suggestions while leaving history.",
+    "created_at": "2025-03-26"
+  },
+  {
+    "id": 97,
+    "subject": "PO ignores supplier minimum order",
+    "body": "Supplier minimum is £500. The suggestion generated a PO for £80.",
+    "category": "purchasing",
+    "root_cause": "moq_not_set",
+    "resolution": "Minimum order value was not set on the supplier. Set it to £500. Suggestions below minimum are now flagged and grouped until they reach it.",
+    "created_at": "2025-04-02"
+  },
+  {
+    "id": 98,
+    "subject": "Lead time in working days or calendar days?",
+    "body": "Supplier says 10 working days. We entered 10. Expected dates look too early.",
+    "category": "purchasing",
+    "root_cause": "lead_time_unit",
+    "resolution": "Lead time is calendar days. Changed to 14. Noted the feature request for working day lead times.",
+    "created_at": "2025-04-09"
+  },
+  {
+    "id": 99,
+    "subject": "PO stuck awaiting approval",
+    "body": "I raised a PO on Monday and it is still awaiting approval. I'm the owner, who is it waiting for?",
+    "category": "purchasing",
+    "root_cause": "approval_workflow_config",
+    "resolution": "Approval was set to require a user with the Finance role and nobody had that role after a staff change. Gave the owner the Finance role and approved the PO.",
+    "created_at": "2025-04-16"
+  },
+  {
+    "id": 100,
+    "subject": "Shortfall report doesn't match what I expect",
+    "body": "Shortfall report shows 0 for a product but we have 20 allocated and 20 on hand. Surely that's a shortfall?",
+    "category": "purchasing",
+    "root_cause": "shortfall_calculation_misunderstood",
+    "resolution": "Shortfall is allocated minus on hand when negative. 20 allocated against 20 on hand is fully covered, so shortfall is 0. Free to sell is 0 which is what they were thinking of. Suggested using the reorder point to trigger before free to sell reaches 0.",
+    "created_at": "2025-04-23"
+  },
+  {
+    "id": 101,
+    "subject": "Can't see the Purchasing menu",
+    "body": "Our new buyer logs in and there is no Purchasing option in the sidebar. I can see it fine.",
+    "category": "user_access",
+    "root_cause": "role_permissions",
+    "resolution": "The user had the Warehouse role which excludes Purchasing. Assigned the Buyer role. Explained roles under Settings > Users.",
+    "created_at": "2025-01-15"
+  },
+  {
+    "id": 102,
+    "subject": "Password reset email not arriving",
+    "body": "I've clicked forgot password three times. Nothing in my inbox or junk.",
+    "category": "user_access",
+    "root_cause": "password_reset_email_blocked",
+    "resolution": "The email was being rejected by their Microsoft 365 tenant's quarantine. Found it in the admin quarantine. Asked their IT to allowlist our sending domain. Sent a reset link via the account owner as a workaround.",
+    "created_at": "2025-01-22"
+  },
+  {
+    "id": 103,
+    "subject": "How do I add a new user?",
+    "body": "We've hired a warehouse assistant. How do I give them a login that only lets them pick and despatch?",
+    "category": "user_access",
+    "root_cause": "new_user_howto",
+    "resolution": "Settings > Users > Invite, choose role Warehouse. Sent the roles comparison table.",
+    "created_at": "2025-01-29"
+  },
+  {
+    "id": 104,
+    "subject": "Locked out, new phone, lost authenticator",
+    "body": "I got a new phone and didn't move my authenticator app. Now I can't log in. I'm the account owner.",
+    "category": "user_access",
+    "root_cause": "two_factor_reset",
+    "resolution": "Verified identity via the registered email and a callback to the number on the account. Reset 2FA. Advised saving the backup codes this time.",
+    "created_at": "2025-02-05"
+  },
+  {
+    "id": 105,
+    "subject": "Sales user can change prices, they shouldn't",
+    "body": "One of our sales team changed a wholesale price by mistake. Can we stop that role editing prices?",
+    "category": "user_access",
+    "root_cause": "role_permissions",
+    "resolution": "Created a custom role 'Sales (read prices)' by cloning Sales and removing Products > Edit prices. Moved the three sales users onto it.",
+    "created_at": "2025-02-12"
+  },
+  {
+    "id": 106,
+    "subject": "Invite link says expired",
+    "body": "I sent an invite to our bookkeeper last month. She clicked it today and it says expired.",
+    "category": "user_access",
+    "root_cause": "invite_expired",
+    "resolution": "Invites expire after 7 days. Resent the invite from Settings > Users.",
+    "created_at": "2025-02-19"
+  },
+  {
+    "id": 107,
+    "subject": "Warehouse staff can see our margins",
+    "body": "Pickers can open a product and see cost price and margin. We'd rather they couldn't.",
+    "category": "user_access",
+    "root_cause": "role_permissions",
+    "resolution": "Removed 'View cost prices' from the Warehouse role. Cost and margin fields are now hidden for that role.",
+    "created_at": "2025-02-26"
+  },
+  {
+    "id": 108,
+    "subject": "Ex-employee still logged in on the warehouse tablet",
+    "body": "We deactivated a user who left, but the warehouse tablet is still logged in as them and working.",
+    "category": "user_access",
+    "root_cause": "session_not_revoked",
+    "resolution": "Deactivating blocks new logins but existing sessions last until they expire. Used 'Sign out everywhere' on the user. Sessions are now revoked immediately on deactivate as of the March release.",
+    "created_at": "2025-03-05"
+  },
+  {
+    "id": 109,
+    "subject": "Cannot add a user, says limit reached",
+    "body": "Trying to invite a sixth user and I get 'User limit reached for your plan'. We only have 4 active users.",
+    "category": "user_access",
+    "root_cause": "plan_user_limit",
+    "resolution": "Deactivated users on the Standard plan still count towards the limit for 30 days. Two leavers were within that window. Removed them permanently which freed the slots. Explained the plan limit and the upgrade option.",
+    "created_at": "2025-03-12"
+  },
+  {
+    "id": 110,
+    "subject": "Can't change my login email",
+    "body": "We changed domain names. The email field on my profile is greyed out.",
+    "category": "user_access",
+    "root_cause": "email_change_requires_owner",
+    "resolution": "Only the account owner can change user emails. Changed it on their behalf with verification. The owner can do this from Settings > Users.",
+    "created_at": "2025-03-19"
+  },
+  {
+    "id": 111,
+    "subject": "Restrict a user to one warehouse",
+    "body": "Our Unit 2 team should only see Unit 2 stock and orders. Is that possible?",
+    "category": "user_access",
+    "root_cause": "location_scoped_permissions",
+    "resolution": "Yes, set Allowed locations on the user to Unit 2 only. Done for the three Unit 2 users.",
+    "created_at": "2025-03-26"
+  },
+  {
+    "id": 112,
+    "subject": "Can we enforce stronger passwords?",
+    "body": "Our insurer requires minimum 12 characters and 2FA for all users.",
+    "category": "user_access",
+    "root_cause": "password_policy_howto",
+    "resolution": "Enabled 'Require 2FA for all users' and set minimum password length to 12 under Settings > Security. Existing users are prompted at next login.",
+    "created_at": "2025-04-02"
+  },
+  {
+    "id": 113,
+    "subject": "Deactivated the wrong user",
+    "body": "I meant to deactivate Sam and deactivated Sarah. Can I undo it?",
+    "category": "user_access",
+    "root_cause": "reactivate_user",
+    "resolution": "Reactivated Sarah from the Inactive users tab. No data lost.",
+    "created_at": "2025-04-09"
+  },
+  {
+    "id": 114,
+    "subject": "API key returns 403 on orders endpoint",
+    "body": "Our developer's API key can read products but gets 403 on /orders.",
+    "category": "user_access",
+    "root_cause": "api_key_scope",
+    "resolution": "The key was created with Products scope only. Generated a new key with Products and Orders read scopes.",
+    "created_at": "2025-04-16"
+  },
+  {
+    "id": 115,
+    "subject": "New user gets 'account not found'",
+    "body": "Invited a user, they set a password, and now get 'account not found' when logging in.",
+    "category": "user_access",
+    "root_cause": "wrong_login_url",
+    "resolution": "They were logging in at the generic app URL instead of the account subdomain. Sent the correct URL. Added the subdomain to the invite email template.",
+    "created_at": "2025-04-23"
+  },
+  {
+    "id": 116,
+    "subject": "Who changed the stock on this product?",
+    "body": "Stock on a product was adjusted by 50 yesterday. I'd like to know which user did it.",
+    "category": "user_access",
+    "root_cause": "audit_log_howto",
+    "resolution": "Product > Stock movements shows user, time and reason for every adjustment. Pointed to the entry.",
+    "created_at": "2025-04-30"
+  },
+  {
+    "id": 117,
+    "subject": "CSV export has the wrong columns",
+    "body": "The orders export used to have Customer, Postcode, SKU, Qty. Since last week it has a different set of columns and our courier upload rejects it.",
+    "category": "reporting_export",
+    "root_cause": "export_template_changed",
+    "resolution": "A colleague had edited the shared export template. Restored the previous version from template history and set it to locked so only admins can edit.",
+    "created_at": "2025-01-17"
+  },
+  {
+    "id": 118,
+    "subject": "Sales report takes forever",
+    "body": "The sales by product report spins for 5 minutes and sometimes times out.",
+    "category": "reporting_export",
+    "root_cause": "report_date_range_too_wide",
+    "resolution": "The report was set to All time across 3 years of line data. Narrowed to the current year and it ran in 6 seconds. Suggested scheduled exports for full history.",
+    "created_at": "2025-01-24"
+  },
+  {
+    "id": 119,
+    "subject": "Export stops at 10,000 rows",
+    "body": "Our product export has 14,000 variants but the file only has 10,000.",
+    "category": "reporting_export",
+    "root_cause": "export_row_limit",
+    "resolution": "Interactive exports cap at 10,000 rows. Used Scheduled exports which have no cap and email a link. Ran one immediately.",
+    "created_at": "2025-01-31"
+  },
+  {
+    "id": 120,
+    "subject": "Sales report doesn't match Xero",
+    "body": "Our sales report for March says £48,200. Xero says £46,900 for the same month.",
+    "category": "reporting_export",
+    "root_cause": "report_includes_cancelled",
+    "resolution": "The sales report included cancelled and refunded orders by default. Applied the status filter Completed only and the figures matched within rounding.",
+    "created_at": "2025-02-07"
+  },
+  {
+    "id": 121,
+    "subject": "Pound signs come out as Â£ in Excel",
+    "body": "When I open the CSV in Excel the £ sign shows as Â£ and customer names with accents are garbled.",
+    "category": "reporting_export",
+    "root_cause": "csv_encoding",
+    "resolution": "Excel assumes Windows encoding for CSV. Enabled 'UTF-8 with BOM' in export settings so Excel reads it correctly. Alternatively use Data > From Text in Excel.",
+    "created_at": "2025-02-14"
+  },
+  {
+    "id": 122,
+    "subject": "Stock valuation looks too high",
+    "body": "Stock valuation report says £210k. Our accountant estimated £160k.",
+    "category": "reporting_export",
+    "root_cause": "valuation_method",
+    "resolution": "Valuation was using current supplier price rather than average cost. Changed the report to Average cost which gave £163k.",
+    "created_at": "2025-02-21"
+  },
+  {
+    "id": 123,
+    "subject": "Scheduled report stopped arriving",
+    "body": "Our Monday morning stock report hasn't arrived for two weeks.",
+    "category": "reporting_export",
+    "root_cause": "scheduled_report_owner_deactivated",
+    "resolution": "The schedule was owned by a user who had been deactivated. Reassigned the schedule to the owner. Scheduled reports now warn when the owner is deactivated.",
+    "created_at": "2025-02-28"
+  },
+  {
+    "id": 124,
+    "subject": "Dates in export are American",
+    "body": "Dates come out as 03/04/2025 meaning March 4th. We need UK format.",
+    "category": "reporting_export",
+    "root_cause": "date_format_locale",
+    "resolution": "Account locale was en-US. Changed to en-GB. Exports now use DD/MM/YYYY. Suggested ISO format for anything feeding another system.",
+    "created_at": "2025-03-07"
+  },
+  {
+    "id": 125,
+    "subject": "Reports very slow on the 1st of the month",
+    "body": "Every month end the reports crawl for the whole morning.",
+    "category": "reporting_export",
+    "root_cause": "report_slow_peak_load",
+    "resolution": "Month end has many accounts running large reports at once. Suggested scheduling their month end reports for 06:00 so they are waiting in the inbox. Engineering added a reporting replica in April which improved peak times.",
+    "created_at": "2025-03-14"
+  },
+  {
+    "id": 126,
+    "subject": "Custom report missing supplier column",
+    "body": "I built a custom product report and can't find a Supplier column to add.",
+    "category": "reporting_export",
+    "root_cause": "custom_report_field_availability",
+    "resolution": "Supplier is under the Purchasing field group which needs the Buyer role to see. Added Buyer permissions to the user, column became available.",
+    "created_at": "2025-03-21"
+  },
+  {
+    "id": 127,
+    "subject": "CSV columns shift when a product name has a comma",
+    "body": "Products like 'Table, Oak, 180cm' break our import into another system because columns move.",
+    "category": "reporting_export",
+    "root_cause": "csv_quoting",
+    "resolution": "Fields with commas are quoted per CSV standard; their downstream tool was not reading quotes. Offered tab separated export as an alternative, which fixed it.",
+    "created_at": "2025-03-28"
+  },
+  {
+    "id": 128,
+    "subject": "Sales by channel shows everything under Manual",
+    "body": "Sales by channel report says 90% Manual. Nearly all our orders come from Shopify.",
+    "category": "reporting_export",
+    "root_cause": "channel_attribution",
+    "resolution": "Orders had been imported via CSV during the migration and were tagged Manual. Bulk updated the channel on the migrated orders using the import batch.",
+    "created_at": "2025-04-04"
+  },
+  {
+    "id": 129,
+    "subject": "Export misses products with zero stock",
+    "body": "Stock export only has 800 rows but we have 1,200 products.",
+    "category": "reporting_export",
+    "root_cause": "export_filter_default",
+    "resolution": "Default filter 'In stock only' was on. Turned it off for that export template.",
+    "created_at": "2025-04-11"
+  },
+  {
+    "id": 130,
+    "subject": "Report times out",
+    "body": "Stock movement report for the year times out every time.",
+    "category": "reporting_export",
+    "root_cause": "report_date_range_too_wide",
+    "resolution": "Stock movements for a year on 1,200 SKUs is over a million rows. Ran it as a scheduled export instead, delivered by email. Suggested monthly ranges for interactive use.",
+    "created_at": "2025-04-18"
+  },
+  {
+    "id": 131,
+    "subject": "Charged twice this month",
+    "body": "Our card has been charged £149 twice on the 1st. We are on the Standard plan which is £149 a month. Please refund the duplicate.",
+    "category": "billing",
+    "root_cause": "billing_double_charge",
+    "resolution": "Escalated to the billing team. A failed first attempt had been retried after the bank reported it as declined, but the bank later settled both. Refunded the duplicate the same day and confirmed by email.",
+    "created_at": "2025-01-18"
+  },
+  {
+    "id": 132,
+    "subject": "Cancelled in March, still being charged",
+    "body": "We cancelled our subscription in March. We've been charged April and May. We want both months back.",
+    "category": "billing",
+    "root_cause": "billing_refund_request",
+    "resolution": "Escalated. The cancellation had been requested by email to a sales contact and not processed. Refunded both months and confirmed cancellation in writing.",
+    "created_at": "2025-01-25"
+  },
+  {
+    "id": 133,
+    "subject": "Upgrade pro-rata charge is wrong",
+    "body": "We upgraded mid-month and were charged the full month plus the pro-rata. That's not what the pricing page says. I'd like this looked at before I pay.",
+    "category": "billing",
+    "root_cause": "billing_dispute",
+    "resolution": "Escalated to billing. The upgrade was processed on the renewal date, so a full new period plus a pro-rata for the day overlapped. Credited the overlap.",
+    "created_at": "2025-02-01"
+  },
+  {
+    "id": 134,
+    "subject": "Our subscription invoice has the wrong company name",
+    "body": "The monthly invoice you send us is addressed to our old trading name and has no VAT number. Our accountant can't reclaim VAT on it.",
+    "category": "billing",
+    "root_cause": "billing_invoice_details",
+    "resolution": "Escalated to billing. Updated the billing details and reissued the last 3 invoices with the correct name and VAT number.",
+    "created_at": "2025-02-08"
+  },
+  {
+    "id": 135,
+    "subject": "We will be raising a chargeback",
+    "body": "We were told the Xero integration was included. It isn't on our plan. We've paid for 2 months and got nothing we needed. If this isn't refunded by Friday we will raise a chargeback with our bank.",
+    "category": "billing",
+    "root_cause": "billing_dispute",
+    "resolution": "Escalated to billing and account management. Reviewed the sales call notes; the integration had been described as available on the plan above. Offered a refund of the 2 months or a free upgrade for 2 months. Customer took the upgrade.",
+    "created_at": "2025-02-15"
+  },
+  {
+    "id": 136,
+    "subject": "Price went up without telling us",
+    "body": "Our monthly charge went from £99 to £119 this month. No email, nothing. I want an explanation and the difference back.",
+    "category": "billing",
+    "root_cause": "billing_dispute",
+    "resolution": "Escalated. The price change email had bounced from a departed finance contact's address. Refunded the difference for the first month and updated the billing contact.",
+    "created_at": "2025-02-22"
+  },
+  {
+    "id": 137,
+    "subject": "Downgraded but still charged the higher plan",
+    "body": "We moved to the Starter plan on the 20th. The invoice on the 1st is still for Standard.",
+    "category": "billing",
+    "root_cause": "billing_plan_change",
+    "resolution": "Escalated to billing. Downgrades take effect at the next renewal and the invoice covered the final Standard period. Explained and provided the date of the first Starter invoice.",
+    "created_at": "2025-03-01"
+  },
+  {
+    "id": 138,
+    "subject": "Account suspended, card declined",
+    "body": "We can't log in, it says account suspended for non payment. Our card was replaced by the bank. We need access today, we have orders to ship.",
+    "category": "billing",
+    "root_cause": "billing_suspension",
+    "resolution": "Escalated to billing with urgency flag. Lifted the suspension for 7 days so they could trade and update the card. Payment taken the next day.",
+    "created_at": "2025-03-08"
+  },
+  {
+    "id": 139,
+    "subject": "Billed for 8 users, we have 5",
+    "body": "Invoice says 8 users. We removed 3 people last month.",
+    "category": "billing",
+    "root_cause": "billing_user_count",
+    "resolution": "Escalated to billing. Deactivated users still counted until removed. Removed the 3 and credited the difference.",
+    "created_at": "2025-03-15"
+  },
+  {
+    "id": 140,
+    "subject": "Want to cancel the annual plan and get a refund",
+    "body": "We paid annually in January. The business is closing. Can we get the remaining months back?",
+    "category": "billing",
+    "root_cause": "billing_refund_request",
+    "resolution": "Escalated to billing and account management. Annual plans are non refundable under the terms, but a goodwill pro-rata refund was approved given the circumstances.",
+    "created_at": "2025-03-22"
+  },
+  {
+    "id": 141,
+    "subject": "300 products have disappeared",
+    "body": "This morning our whole Garden range is gone. About 300 products. They are not in the archived list either. We need them back urgently, the website is showing 404s.",
+    "category": "data_loss",
+    "root_cause": "bulk_delete_by_user",
+    "resolution": "Escalated to engineering. Audit log showed a bulk delete by a user at 08:12 who had selected all products in a filtered view. Restored the 300 products and their stock from the nightly snapshot plus the day's movement log. Bulk delete now requires typing the count to confirm.",
+    "created_at": "2025-01-19"
+  },
+  {
+    "id": 142,
+    "subject": "All of 2024's orders have gone",
+    "body": "Our order list starts in January 2025. Everything before that is missing. We need it for our accounts.",
+    "category": "data_loss",
+    "root_cause": "archived_view_not_deleted",
+    "resolution": "Escalated as potential data loss. Orders were intact; the year end archive job had moved 2024 orders to the Archived view which is hidden by default. Showed the Include archived toggle. No data was lost.",
+    "created_at": "2025-01-26"
+  },
+  {
+    "id": 143,
+    "subject": "Stock levels reset to zero overnight",
+    "body": "Every single product shows 0 on hand this morning. Yesterday was fine. We have a van going out in an hour.",
+    "category": "data_loss",
+    "root_cause": "import_overwrote_stock",
+    "resolution": "Escalated to engineering. A stock import run at 02:00 by a scheduled FTP job contained a file with blank quantities, which were treated as 0. Restored on hand from the pre-import snapshot. Blank quantities are now skipped rather than zeroed.",
+    "created_at": "2025-02-02"
+  },
+  {
+    "id": 144,
+    "subject": "Customer names and addresses are mixed up",
+    "body": "Customer records seem corrupted. Opening 'Hartley Farm Shop' shows the address for a different customer, and the order history is someone else's.",
+    "category": "data_loss",
+    "root_cause": "customer_merge_error",
+    "resolution": "Escalated to engineering. A customer merge run by a user had merged on a shared email domain rather than full email. Reversed the merge from the merge log. 41 customers affected and restored.",
+    "created_at": "2025-02-09"
+  },
+  {
+    "id": 145,
+    "subject": "Invoices missing after Xero sync",
+    "body": "After the sync ran last night about 50 invoices are gone from your system. Not in Xero either.",
+    "category": "data_loss",
+    "root_cause": "sync_deleted_voided_invoices",
+    "resolution": "Escalated to engineering. The invoices had been voided in Xero by their accountant and the sync pulled the void back, which hides them in our system. Un-hid them and the view shows voided invoices with a status. Nothing deleted.",
+    "created_at": "2025-02-16"
+  },
+  {
+    "id": 146,
+    "subject": "Product images and attachments gone",
+    "body": "All our product images and the PDF spec sheets have vanished. The product records are there but every image is a broken link.",
+    "category": "data_loss",
+    "root_cause": "storage_bucket_permissions",
+    "resolution": "Escalated to engineering. A storage permissions change made the files unreadable. Files were intact. Permissions restored within 40 minutes.",
+    "created_at": "2025-02-23"
+  },
+  {
+    "id": 147,
+    "subject": "Stock movement history only goes back 90 days",
+    "body": "We used to be able to see movements for 2 years. Now it stops at 90 days. Has our history been deleted?",
+    "category": "data_loss",
+    "root_cause": "retention_setting_changed",
+    "resolution": "Escalated as potential data loss. History was intact; the movement view's default range changed to 90 days in a release. Older movements are available via date filter and export. Updated the release notes.",
+    "created_at": "2025-03-02"
+  },
+  {
+    "id": 148,
+    "subject": "Deleted a supplier by mistake and all their POs are gone",
+    "body": "I deleted a supplier thinking it was a duplicate. Now 2 years of purchase orders from them are missing.",
+    "category": "data_loss",
+    "root_cause": "cascade_delete",
+    "resolution": "Escalated to engineering. Supplier delete is a soft delete and POs were hidden not removed. Restored the supplier which restored the POs. Delete is now blocked when a supplier has PO history.",
+    "created_at": "2025-03-09"
+  },
+  {
+    "id": 149,
+    "subject": "Product descriptions overwritten with rubbish",
+    "body": "Hundreds of product descriptions now contain what looks like another company's text. Our website is pulling these in.",
+    "category": "data_loss",
+    "root_cause": "import_wrong_file",
+    "resolution": "Escalated to engineering. A product import had been run with a file from the customer's previous system that had a different column order, putting another field into Description. Restored descriptions from the previous day's snapshot.",
+    "created_at": "2025-03-16"
+  },
+  {
+    "id": 150,
+    "subject": "System looks like it has gone back in time",
+    "body": "Everything we did yesterday afternoon is gone. Orders we created, stock we adjusted. It's as if the system rolled back to lunchtime.",
+    "category": "data_loss",
+    "root_cause": "user_working_in_sandbox",
+    "resolution": "Escalated to engineering as suspected rollback. Investigation showed the afternoon's work had been done in the sandbox account (same login, different subdomain). Production was intact. Re-keyed the afternoon's work with the customer. Sandbox now shows a persistent banner.",
+    "created_at": "2025-03-23"
+  }
+]
